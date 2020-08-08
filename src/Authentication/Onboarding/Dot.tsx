@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { interpolate, Extrapolate } from 'react-native-reanimated';
+import { palette } from '../../components/Theme';
 
 const styles = StyleSheet.create({
   dot: {
-    backgroundColor: '#E3B505',
+    backgroundColor: palette.cederChest,
     height: 8,
     width: 8,
     borderRadius: 4,

@@ -1,13 +1,12 @@
 import React from 'react';
 import {
   View,
-  Text,
   Dimensions,
   StyleSheet
 } from 'react-native';
-import { Button } from '../../components';
+import { Button, Text } from '../../components';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   contianer: {
     width,
@@ -23,7 +22,6 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
-    backgroundColor: 'white',
     justifyContent: 'space-around',
     alignItems: 'center'
   },

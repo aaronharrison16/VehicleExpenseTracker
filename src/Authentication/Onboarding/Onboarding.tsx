@@ -8,8 +8,7 @@ import { useScrollHandler } from 'react-native-redash';
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white',
+    flex: 1
   },
   slider: {
     flex: 1,
@@ -41,7 +40,7 @@ const Onboarding = () => {
   const scroll = useRef<Animated.ScrollView>(null);
   const { scrollHandler, x } = useScrollHandler();
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.slider}>
         <Animated.ScrollView
           ref={scroll}
@@ -75,7 +74,7 @@ const Onboarding = () => {
           />
         ))}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

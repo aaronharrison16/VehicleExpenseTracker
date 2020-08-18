@@ -8,7 +8,7 @@ import { Button, Text } from '../../components';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
-  contianer: {
+  container: {
     width,
     height: '100%'
   },
@@ -39,7 +39,7 @@ interface SlideProps {
 
 const Slide = ({ title, description, last, onPress }: SlideProps) => {
   return (
-    <View style={styles.contianer}>
+    <View style={styles.container}>
       <View style={styles.image}>
         <Text>TODO IMAGE</Text>
       </View>

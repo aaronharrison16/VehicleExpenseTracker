@@ -16,24 +16,40 @@ const styles = StyleSheet.create({
   },
   text: {
     color: palette.light,
-    fontSize: 18
   }
 })
 
 interface ButtonProps {
-  variant: string;
+  variant: 'primary' | 'secondary' | 'transparent';
   label: string;
   onPress: () => void;
+  style?: object;
+  fontSize?: number
 }
 
-const Button = ({ variant, label, onPress }: ButtonProps) => {
-  const backgroundColor = variant === 'primary' ? palette.cederChest : palette.cadet
+const Button = ({ variant, label, onPress, style, fontSize = 18 }: ButtonProps) => {
+  var backgroundColor
+  switch (variant) {
+    case 'primary':
+      backgroundColor = palette.cederChest
+      break;
+    case 'secondary':
+      backgroundColor = palette.cadet
+      break;
+    case 'transparent':
+      backgroundColor = palette.transparent
+      break;
+    default:
+      backgroundColor = palette.cederChest
+      break;
+  }
+
   return (
     <RectButton
-      style={[styles.container, { backgroundColor }]}
+      style={[styles.container, style, { backgroundColor }]}
       {...{ onPress }}  
     >
-      <Text style={styles.text}>{label}</Text>
+      <Text style={[styles.text, { fontSize }]}>{label}</Text>
     </RectButton>
   )
 }

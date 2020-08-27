@@ -7,7 +7,8 @@ const palette = {
   cadet: '#4F6D7A',
   cadetBlue: '#56A3A6',
   dark: '#1A1D22',
-  light: '#FFFFFF'
+  light: '#FFFFFF',
+  transparent: 'transparent'
 };
 
 

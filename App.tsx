@@ -1,17 +1,16 @@
 import React from 'react';
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Onboarding from './src/Authentication/Onboarding/Onboarding';
-import { darkTheme, lightTheme } from './src/components';
 import { StatusBar, SafeAreaView, StyleSheet } from 'react-native';
 
-const AuthenticationStack = createStackNavigator();
-const AuthenticationNavigator = () => (
-  <AuthenticationStack.Navigator headerMode="none">
-    <AuthenticationStack.Screen name="Onboarding" component={Onboarding} />
-  </AuthenticationStack.Navigator>
-);
+import { darkTheme, lightTheme } from './src/components';
+import { AuthenticationNavigator } from './src/Authentication';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
 
 export default function App() {
   const scheme = useColorScheme()
@@ -30,9 +29,3 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-})

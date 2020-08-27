@@ -1,22 +1,33 @@
 import React, { useRef } from 'react';
-import { View, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
-import Animated, { divide } from 'react-native-reanimated';
+import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import Animated, { divide, color } from 'react-native-reanimated';
 import Slide from './Slide';
 import Dot from './Dot';
 import { useScrollHandler } from 'react-native-redash';
+import { StackNavigationProps, Routes } from '../../components/Navigation';
+import { Button, Text } from '../../components';
+import { useTheme } from '@react-navigation/native';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1
   },
   slider: {
-    flex: 1,
+    flex: 4,
   },
   paginationContainer: {
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row'
+  },
+  authenticationContainer: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  signInContainer: {
     flexDirection: 'row'
   }
 });
@@ -36,7 +47,8 @@ const slides = [
   },
 ];
 
-const Onboarding = () => {
+const Onboarding = ({ navigation }: StackNavigationProps<Routes, "Onboarding">) => {
+  const { colors } = useTheme();
   const scroll = useRef<Animated.ScrollView>(null);
   const { scrollHandler, x } = useScrollHandler();
   return (
@@ -51,18 +63,24 @@ const Onboarding = () => {
           pagingEnabled
           { ...scrollHandler}
         >
-          {slides.map(({ title, description }, index) => (
-            <Slide
-              key={index}
-              {...{title, description}}
-              last={index === slides.length - 1}
-              onPress={() => {
-                if (scroll.current) {
-                  scroll.current.getNode().scrollTo({ x: width * (index + 1), animated: true })
-                } 
-              }}  
-            />
-          ))}
+          {slides.map(({ title, description }, index) => {
+            const last = index === slides.length - 1
+
+            return (
+              <Slide
+                key={index}
+                {...{title, description, last}}
+                // onPress={() => {
+                //   if (last) {
+                //     navigation.navigate('Welcome')
+                //   } else {
+                //     scroll.current
+                //     ?.getNode().scrollTo({ x: width * (index + 1), animated: true })
+                //   }
+                // }}  
+              />
+            )
+          })}
         </Animated.ScrollView>
       </View>
       <View style={styles.paginationContainer}>
@@ -73,6 +91,20 @@ const Onboarding = () => {
             { ...{index}}
           />
         ))}
+      </View>
+      <View style={styles.authenticationContainer}>
+        <Button
+          label='Create account'
+          onPress={() => {navigation.navigate('SignUp')}}
+        />
+        <View style={styles.signInContainer}>
+          <Text>Already have an account? </Text>
+          <TouchableOpacity onPress={() => {navigation.navigate('Login')}}>
+            <Text style={{color: colors.notification}}>
+              Log in
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

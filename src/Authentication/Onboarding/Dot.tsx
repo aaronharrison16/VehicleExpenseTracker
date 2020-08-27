@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
 interface DotProps {
   index: number;
-  currentIndex: number;
+  currentIndex: Animated.Node<number>;
 }
 
 const Dot = ({ index, currentIndex }: DotProps) => {

@@ -33,11 +33,9 @@ const styles = StyleSheet.create({
 interface SlideProps {
   title: string;
   description: string;
-  last: string;
-  onPress: () => void;
 }
 
-const Slide = ({ title, description, last, onPress }: SlideProps) => {
+const Slide = ({ title, description }: SlideProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.image}>
@@ -47,11 +45,6 @@ const Slide = ({ title, description, last, onPress }: SlideProps) => {
         <View style={styles.infoContainer}>
           <Text style={styles.title}>{ title }</Text>
           <Text>{ description }</Text>
-          <Button
-            label={last ? "Let's Go!" : 'Next' }
-            variant={last ? "primary" : "default"}
-            {...{ onPress }}
-          />
         </View>
       </View>
     </View>

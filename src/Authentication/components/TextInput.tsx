@@ -18,7 +18,7 @@ const TextInput = ({ icon }: TextInputProps) => {
   return (
     <View>
       <Icon name={icon} />
-      <RNTextInput underlineColorAndroid='transparent-'
+      <RNTextInput />
     </View>
   )
 }

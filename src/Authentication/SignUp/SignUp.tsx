@@ -1,51 +1,133 @@
-import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Text, Button } from '../../components';
+import React, { useState, useEffect, createContext } from 'react'
+import { View, StyleSheet, Keyboard, UIManager, LayoutAnimation } from 'react-native'
+import { Text, Button, TextInput } from '../../components';
 import { StackNavigationProps, Routes } from '../../components/Navigation';
-import { TextInput } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons';
+import { LoginNavigator } from '../components';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
+  },
+  createAccountText: {
+    fontSize: 40,
+    fontWeight: '600',
+    paddingVertical: 5
+  },
+  headerContainer: {
+    flex: 3,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  createAccountContainer: {
+    flex: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  createAccountTextContainer: {
+    marginHorizontal: 7,
+  },
+  inputContainer: {
+    width: '90%',
+    maxWidth: 380
+  },
+  signupButtonContainer: {
+    alignItems: 'center',
+    width: '100%',
+    margin: 24
+  },
+  loginContainer: {
+    flex: 2,
+    justifyContent: 'flex-end'
   },
   textInput: {
-    backgroundColor: 'grey',
-    padding: 0,
-    margin: 3
+    marginVertical: 6,
+    width: '100%'
+  },
+  signupButton: {
+    width: '90%',
+    maxWidth: 380
   }
 })
 
 const SignUp = ({ navigation }: StackNavigationProps<Routes, 'SignUp'>) => {
+  UIManager.setLayoutAnimationEnabledExperimental(true)
   const [name, onChangeName] = useState('')
   const [email, onChangeEmail] = useState('')
   const [password, onChangePassword] = useState('')
+  const [confirmPassword, onChangeConfirmPassword] = useState('')
+  const [layoutType, setLayoutType] = useState<'column' | 'row'>('column')
+
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+    Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+
+    return () => {
+      console.log('unsubscribed')
+      Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
+      Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
+    }
+  })
+
+  const keyboardDidShow = () => {
+    console.log('keyboard shown')
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    setLayoutType('row')
+  }
+
+  const keyboardDidHide = () => {
+    console.log('keyboard hidden')
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    setLayoutType('column')
+  }
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text>Create</Text>
-        <Text>Account</Text>
-      </View> 
-      <Ionicons name="md-checkmark-circle" size={32} color="green" />
-      <View>
-        <TextInput
-          style={styles.textInput}  
-          onChangeText={(text) => onChangeName(text)}
-        />
-        <TextInput
-          style={styles.textInput}  
-          onChangeText={(text) => onChangeEmail(text)}
-        />
-        <TextInput
-          style={styles.textInput}  
-          onChangeText={(text) => onChangePassword(text)}
+      <View style={styles.headerContainer}>
+        <View style={{flexDirection: layoutType, marginBottom: 10}}>
+          <View style={styles.createAccountTextContainer}>
+            <Text style={styles.createAccountText}>Create</Text>
+          </View>
+          <View style={styles.createAccountTextContainer}>
+            <Text style={styles.createAccountText}>Account</Text>
+          </View>
+        </View>
+      </View>
+      <View style={styles.createAccountContainer}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder='Name'
+            style={styles.textInput}
+            onChangeText={(text) => onChangeName(text)}
+          />
+          <TextInput
+            placeholder='Email'
+            style={styles.textInput}
+            onChangeText={(text) => onChangeEmail(text)}
+          />
+          <TextInput
+            placeholder='Password'
+            style={styles.textInput}
+            onChangeText={(text) => onChangePassword(text)}
+          />
+          <TextInput
+            placeholder='Confirm password'
+            style={styles.textInput}
+            onChangeText={(text) => onChangeConfirmPassword(text)}
+          />
+        </View>
+        <View style={styles.signupButtonContainer}>
+          <Button
+            label='Sign up'
+            onPress={() => {}}
+            style={styles.signupButton}
+          />
+        </View>
+      </View>
+      <View style={styles.loginContainer}>
+        <LoginNavigator
+          onPress={() => navigation.navigate('Login')}
         />
       </View>
-      {/* <View style={{height: 180, justifyContent: 'center', alignItems: 'center', borderTopColor: 'white', borderTopWidth: 1}}>
-        <Text>Sign in using</Text>
-        <Text>TODO SOCIAL LOGINS AND SUCH</Text>
-      </View> */}
     </View>
   );
 };

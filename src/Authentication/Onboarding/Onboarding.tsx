@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
-import Animated, { divide, color } from 'react-native-reanimated';
+import { View, Dimensions, StyleSheet } from 'react-native';
+import Animated, { divide } from 'react-native-reanimated';
 import Slide from './Slide';
 import Dot from './Dot';
 import { useScrollHandler } from 'react-native-redash';
 import { StackNavigationProps, Routes } from '../../components/Navigation';
-import { Button, Text } from '../../components';
-import { useTheme } from '@react-navigation/native';
+import { Button } from '../../components';
+import { LoginNavigator } from '../components';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   slider: {
-    flex: 4,
+    flex: 4.25,
   },
   paginationContainer: {
     height: 50,
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   authenticationContainer: {
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center'
   },
   signInContainer: {
@@ -48,7 +48,6 @@ const slides = [
 ];
 
 const Onboarding = ({ navigation }: StackNavigationProps<Routes, "Onboarding">) => {
-  const { colors } = useTheme();
   const scroll = useRef<Animated.ScrollView>(null);
   const { scrollHandler, x } = useScrollHandler();
   return (
@@ -97,14 +96,9 @@ const Onboarding = ({ navigation }: StackNavigationProps<Routes, "Onboarding">) 
           label='Create account'
           onPress={() => {navigation.navigate('SignUp')}}
         />
-        <View style={styles.signInContainer}>
-          <Text>Already have an account? </Text>
-          <TouchableOpacity onPress={() => {navigation.navigate('Login')}}>
-            <Text style={{color: colors.notification}}>
-              Log in
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <LoginNavigator
+          onPress={() => navigation.navigate('Login')}
+        />
       </View>
     </View>
   );

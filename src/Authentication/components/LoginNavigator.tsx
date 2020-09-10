@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   loginContainer: {
     justifyContent: 'space-around',
     alignItems: 'center',
-    // padding: 10
+    padding: 15
   },
   loginText: {
     // margin: 3,

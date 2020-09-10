@@ -1,7 +1,7 @@
-import React, { useState, useEffect, createContext } from 'react'
-import { View, StyleSheet, Keyboard, UIManager, LayoutAnimation } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, Keyboard, UIManager } from 'react-native'
 import { Text, Button, TextInput } from '../../components';
-import { StackNavigationProps, Routes } from '../../components/Navigation';
+import { StackNavigationProps, AuthenticationRoutes } from '../../components/Navigation';
 import { LoginNavigator } from '../components';
 
 const styles = StyleSheet.create({
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     flex: 2,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    
   },
   textInput: {
     marginVertical: 6,
@@ -49,41 +50,33 @@ const styles = StyleSheet.create({
   }
 })
 
-const SignUp = ({ navigation }: StackNavigationProps<Routes, 'SignUp'>) => {
+const SignUp = ({ navigation }: StackNavigationProps<AuthenticationRoutes, 'SignUp'>) => {
   UIManager.setLayoutAnimationEnabledExperimental(true)
   const [name, onChangeName] = useState('')
   const [email, onChangeEmail] = useState('')
   const [password, onChangePassword] = useState('')
   const [confirmPassword, onChangeConfirmPassword] = useState('')
-  const [layoutType, setLayoutType] = useState<'column' | 'row'>('column')
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', keyboardDidShow);
     Keyboard.addListener('keyboardDidHide', keyboardDidHide);
 
     return () => {
-      console.log('unsubscribed')
       Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
       Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
     }
   })
 
   const keyboardDidShow = () => {
-    console.log('keyboard shown')
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    setLayoutType('row')
   }
 
   const keyboardDidHide = () => {
-    console.log('keyboard hidden')
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    setLayoutType('column')
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <View style={{flexDirection: layoutType, marginBottom: 10}}>
+        <View style={{marginBottom: 10}}>
           <View style={styles.createAccountTextContainer}>
             <Text style={styles.createAccountText}>Create</Text>
           </View>
@@ -118,16 +111,14 @@ const SignUp = ({ navigation }: StackNavigationProps<Routes, 'SignUp'>) => {
         <View style={styles.signupButtonContainer}>
           <Button
             label='Sign up'
-            onPress={() => {}}
+            onPress={() => navigation.navigate('General')}
             style={styles.signupButton}
           />
         </View>
       </View>
-      <View style={styles.loginContainer}>
-        <LoginNavigator
-          onPress={() => navigation.navigate('Login')}
-        />
-      </View>
+      <LoginNavigator
+        onPress={() => navigation.navigate('Login')}
+      />
     </View>
   );
 };

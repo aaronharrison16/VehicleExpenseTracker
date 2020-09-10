@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   slider: {
-    flex: 4.25,
+    flex: 4,
   },
   paginationContainer: {
     height: 50,
@@ -69,14 +69,6 @@ const Onboarding = ({ navigation }: StackNavigationProps<Routes, "Onboarding">) 
               <Slide
                 key={index}
                 {...{title, description, last}}
-                // onPress={() => {
-                //   if (last) {
-                //     navigation.navigate('Welcome')
-                //   } else {
-                //     scroll.current
-                //     ?.getNode().scrollTo({ x: width * (index + 1), animated: true })
-                //   }
-                // }}  
               />
             )
           })}
